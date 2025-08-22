@@ -54,12 +54,6 @@ CREATE TABLE Livro(
     Título VARCHAR(250) NOT NULL,
     Ano YEAR,
     Editora VARCHAR(250) NOT NULL
-    /*
-    CONSTRAINT FK_CPF_Aluno
-    FOREIGN KEY (CPF) REFERENCES Pessoa(CPF)
-    ON UPDATE CASCADE
-    ON DELETE RESTRICT
-    */
 );
 
 /*
@@ -69,9 +63,9 @@ Criação do relacionamento "tem"
 */
 
 CREATE TABLE Autor_Livro(
-	Autor_ID INT,
-	Livro_ISBN CHAR(13),
-    CONSTRAINT FK_Autor_Livro PRIMARY KEY (Autor_ID, Livro_ISBN),
+	Autor_ID INT NOT NULL,
+	Livro_ISBN CHAR(13) NOT NULL,
+    CONSTRAINT FK_Autor_Livro PRIMARY KEY (Autor_ID, Livro_ISBN), -- Obriga ao par Autor/Livro só aparecer 1 vez
     CONSTRAINT FK_AutorID
 		FOREIGN KEY (Autor_ID) REFERENCES Autor(ID)
 		ON UPDATE CASCADE
@@ -82,3 +76,23 @@ CREATE TABLE Autor_Livro(
 		ON DELETE RESTRICT
 );
 
+
+/*
+=========================
+Criação do Objeto Emprestimo e Relacionamento Registra
+=========================
+*/
+
+CREATE TABLE Empréstimo(
+	ID INT AUTO_INCREMENT PRIMARY KEY,
+    ISBN_Livro CHAR(13) NOT NULL,
+		CONSTRAINT FK_ISBN_Livro FOREIGN KEY (ISBN_Livro) REFERENCES Livro(ISBN)
+			ON UPDATE CASCADE
+			ON DELETE RESTRICT,
+    Matricula_Aluno INT NOT NULL,
+		CONSTRAINT FK_Matricula	FOREIGN KEY (Matricula_Aluno) REFERENCES Aluno(Matricula)
+			ON UPDATE CASCADE
+			ON DELETE RESTRICT,
+    DataEmprestimo DATE NOT NULL,
+    DataEDevolução DATE NOT NULL
+);
