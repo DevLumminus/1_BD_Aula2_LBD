@@ -64,7 +64,7 @@ Criação do relacionamento "tem"
 
 CREATE TABLE Autor_Livro(
 	Autor_ID INT NOT NULL,
-	Livro_ISBN CHAR(13) NULL,
+	Livro_ISBN CHAR(13) NOT NULL,
     CONSTRAINT FK_Autor_Livro PRIMARY KEY (Autor_ID, Livro_ISBN), -- Obriga ao par Autor/Livro só aparecer 1 vez
     CONSTRAINT FK_AutorID
 		FOREIGN KEY (Autor_ID) REFERENCES Autor(ID)
@@ -75,6 +75,7 @@ CREATE TABLE Autor_Livro(
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
 );
+
 
 /*
 =========================
