@@ -76,7 +76,6 @@ CREATE TABLE Autor_Livro(
 		ON DELETE RESTRICT
 );
 
-
 /*
 =========================
 Criação do Objeto Emprestimo e Relacionamento Registra
@@ -95,4 +94,51 @@ CREATE TABLE Empréstimo(
 			ON DELETE RESTRICT,
     DataEmprestimo DATE NOT NULL,
     DataEDevolução DATE NOT NULL
+);
+
+/*
+=========================
+Criação da tabela Curso
+=========================
+*/
+
+CREATE TABLE Curso(
+	Código_Curso INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(200) NOT NULL
+);
+
+/*
+=========================
+Criação da tabela Turma
+=========================
+*/
+
+CREATE TABLE Turma(
+	Código_Turma INT AUTO_INCREMENT PRIMARY KEY,
+    Semestre INT NOT NULL
+);
+
+/*
+=========================
+Criação do relacionamento "tem"
+=========================
+*/
+
+CREATE TABLE Cursa(
+	Matricula_Aluno INT NOT NULL DEFAULT 0,
+	Código_Curso INT NOT NULL DEFAULT 0,
+	Código_Turma INT NOT NULL DEFAULT 0,
+    CONSTRAINT FK_Cursando PRIMARY KEY (Matricula_Aluno, Código_Curso, Código_Turma),
+    CONSTRAINT FK_Matricula_Aluno
+		FOREIGN KEY (Matricula_Aluno) REFERENCES Aluno(Matricula)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+    CONSTRAINT FK_Código_Curso
+		FOREIGN KEY (Código_Curso) REFERENCES Curso(Código_Curso)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	CONSTRAINT FK_Código_Turma
+		FOREIGN KEY (Código_Turma) REFERENCES Turma(Código_Turma)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
 );
